@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Amy课程表</string>
+
+    <string name="nav_home_title">首页</string>
+    <string name="nav_schedule_title">课表</string>
+    <string name="nav_more_title">我的</string>
+    <string name="cancel">取消</string>
+    <string name="OK">确定</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>

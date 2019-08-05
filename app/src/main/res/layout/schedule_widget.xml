@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mdialog_bg"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="SORRY!\n由于桌面小部件\n开发步骤极其繁\n琐，暂时跳票了"
+        android:textColor="@color/primary"
+        android:textSize="18sp" />
+
+</RelativeLayout>

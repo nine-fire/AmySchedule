@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mdialog_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_text_in_wheel_view_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:padding="16dp"
+        android:text="请选择"
+        android:textColor="@color/primary_text"
+        android:textSize="15sp" />
+
+    <com.weigan.loopview.LoopView
+        android:id="@+id/loop_view_in_wheel_view_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:awv_centerTextColor="@color/primary_text"
+        app:awv_outerTextColor="@color/secondary_text"
+        app:awv_textsize="15" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <Button
+            android:id="@+id/negative_btn"
+            android:layout_width="170dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent"
+            android:text="@string/cancel"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/positive_btn"
+            android:layout_width="170dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent"
+            android:text="@string/OK"
+            android:textColor="@color/primary"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

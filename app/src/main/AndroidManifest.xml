@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.wbu.xiaowei.amyschedule">
+
+    <!-- 应用权限申请 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/default_theme"
+        tools:ignore="UnusedAttribute">
+        <receiver android:name=".ScheduleWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info" />
+        </receiver>
+
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.PersonalInformationActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.MyScoreActivity" />
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- ActiveAndroid provider -->
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.wbu.xiaowei.amyschedule"
+            android:enabled="true"
+            android:exported="false" /> <!-- ActiveAndroid meta data -->
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="database_aa.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.wbu.xiaowei.amyschedule.bean.User,com.wbu.xiaowei.amyschedule.bean.Course,com.wbu.xiaowei.amyschedule.bean.Major" />
+    </application>
+
+</manifest>
