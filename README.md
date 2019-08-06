@@ -4,5 +4,14 @@
 
 ### 克隆地址
 
-- SSH: `git clone git@github.com:nine-fire/AmySchedule.git ./AmySchedule`
-- HTTPS: `git clone https://github.com/nine-fire/AmySchedule.git ./AmySchedule`
+- SSH
+
+```shell
+$ git clone git@github.com:nine-fire/AmySchedule.git ./AmySchedule
+```
+
+- HTTPS
+
+```shell
+$ git clone https://github.com/nine-fire/AmySchedule.git ./AmySchedule
+```
