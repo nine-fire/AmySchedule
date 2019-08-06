@@ -19,18 +19,20 @@ import android.widget.TextView;
 
 import com.wbu.xiaowei.amyschedule.R;
 import com.wbu.xiaowei.amyschedule.activity.AboutActivity;
+import com.wbu.xiaowei.amyschedule.activity.HelpActivity;
 import com.wbu.xiaowei.amyschedule.activity.LoginActivity;
 import com.wbu.xiaowei.amyschedule.activity.MyScoreActivity;
-import com.wbu.xiaowei.amyschedule.activity.SettingsActivity;
 import com.wbu.xiaowei.amyschedule.activity.PersonalInformationActivity;
+import com.wbu.xiaowei.amyschedule.activity.SettingsActivity;
 import com.wbu.xiaowei.amyschedule.adapter.PersonalCenterListAdapter;
-import com.wbu.xiaowei.amyschedule.util.ScheduleUtils;
 import com.wbu.xiaowei.amyschedule.other.SimpleDividerItemDecoration;
+import com.wbu.xiaowei.amyschedule.util.ScheduleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalCenterFragment extends Fragment {
+    public static final String TAG = PersonalCenterFragment.class.getSimpleName();
 
     private RecyclerView moreRecyclerView;
     private LinearLayout loginBtn;
@@ -138,7 +140,7 @@ public class PersonalCenterFragment extends Fragment {
                     intent = new Intent(getActivity(), SettingsActivity.class);
                     break;
                 case 2: // 帮助与反馈
-                    intent = new Intent(getActivity(), SettingsActivity.class);
+                    intent = new Intent(getActivity(), HelpActivity.class);
                     break;
                 case 3: // 关于
                     intent = new Intent(getActivity(), AboutActivity.class);

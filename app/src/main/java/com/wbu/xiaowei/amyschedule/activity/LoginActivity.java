@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
@@ -36,6 +35,7 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
+    public static final String TAG = LoginActivity.class.getSimpleName();
 
     // 控件
     private ImageButton backBtn;
@@ -53,20 +53,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 初始化
      */
     private void initView() {
-        // 获取控件
         backBtn = findViewById(R.id.back_btn_in_login_page);
-        usernameEt = findViewById(R.id.username_edit_text);
-        passwordEt = findViewById(R.id.password_edit_text);
-        Button loginBtn = findViewById(R.id.login_btn_in_login_page);
-        TextView logoText = findViewById(R.id.logo_in_login_page);
-
-        // 监听
         backBtn.setOnClickListener(this);
+
+        Button loginBtn = findViewById(R.id.login_btn_in_login_page);
         loginBtn.setOnClickListener(this);
 
         // 设置 logo 字体
+        TextView logoText = findViewById(R.id.logo_in_login_page);
         Typeface typeface = ResourcesCompat.getFont(this, R.font.library_3_am);
         logoText.setTypeface(typeface);
+
+        usernameEt = findViewById(R.id.username_edit_text);
+        passwordEt = findViewById(R.id.password_edit_text);
     }
 
     @Override
@@ -97,9 +96,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (flag) {
             showLoadingAnim(); // 显示加载动画
             // 在发送登录请求之前先保存学号和密码，以防登录网络问题
-            //ScheduleUtils.userInfo = new UserInfo(username, password, "", 1, "", "", "", "", "", "", false);
-            //ScheduleUtils.getInstance(this).saveUserInfo(); // 保存用户信息
-            ScheduleUtils.login(loginCallback); // 发送登录请求
+            ScheduleUtils.userInfo = new UserInfo(username, password, "", 1, "", "", "", "", "", "", false);
+            // ScheduleUtils.getInstance(this).saveUserInfo(); // 保存用户信息
+            int status = ScheduleUtils.login(loginCallback); // 发送登录请求
+
+            switch (status) {
+                case ScheduleUtils.NOT_LOGIN:
+                    // 没有用户数据，发生的几率很小
+                    break;
+                case ScheduleUtils.INCOMPLETE_USER_INFORMATION:
+                    // 用户信息不完整，此处发生的概率几乎为零
+                    break;
+            }
         }
     }
 
@@ -109,14 +117,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Callback loginCallback = new StringCallback() {
         @Override
         public void onError(Call call, Exception e, int id) {
-            Log.d("LoginActivity", "loginCallback: onError: 登录失败...");
+            Log.d(TAG, "loginCallback: onError: 登录失败...");
             ScheduleUtils.userInfo.isLogin = false;
         }
 
         @Override
         public void onResponse(String response, int id) {
             if (response.contains("学生个人中心")) {
-                Log.d("LoginActivity", "loginCallback: onResponse: 登录成功...");
+                Log.d(TAG, "loginCallback: onResponse: response.contains(\"学生个人中心\"): 登录成功...");
 
                 // 更新用户信息
                 ScheduleUtils.userInfo.isLogin = true;
@@ -126,12 +134,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Message msg = Message.obtain();
                 msg.what = ScheduleUtils.LOGIN_OK;
                 handler.sendMessage(msg);
-            } else {
-                Log.d("LoginActivity", "loginCallback: onResponse: 响应体不包含“学生个人中心”: 登录失败...");
+            } else if (response.contains("用户名或者密码有误")) {
+                Log.d(TAG, "loginCallback: onResponse: response.contains(\"用户名或者密码有误\"): 用户名或者密码有误: 登录失败...");
+                hiddenLoadingAnim();
 
                 // 更新用户信息
                 ScheduleUtils.userInfo.isLogin = false;
-                ScheduleUtils.getInstance(LoginActivity.this).saveUserInfo();
+                showSnackbar("学号或密码错误  仔细检查吧");
+            } else if (response.contains("验证码")) {
+                Log.d(TAG, "loginCallback: onResponse: response.contains(\"验证码\"): 需要输入验证码: 登录失败...");
+
+                hiddenLoadingAnim();
+                showSnackbar("由于登录频繁  现在登录需要输入图形验证码\n需要去智慧校园手动登录一次即可解决");
+            } else {
+                Log.d(TAG, "loginCallback: onResponse: 响应体不包含“学生个人中心”: 登录失败...");
+                hiddenLoadingAnim();
+
+                // 更新用户信息
+                ScheduleUtils.userInfo.isLogin = false;
+                showSnackbar("发生了未知错误  请稍后重试吧");
             }
         }
     };
@@ -155,15 +176,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 case ScheduleUtils.COURSE_LIST_OK:
                     hiddenLoadingAnim();
                     finish();
-                    break;
-                case ScheduleUtils.NOT_LOGIN:
-                    Log.d("LoginActivity", "handleMessage: case ScheduleUtils.NOT_LOGIN: 没有登录");
-                    break;
-                case ScheduleUtils.INCOMPLETE_USER_INFORMATION:
-                    Log.d("LoginActivity", "handleMessage: case ScheduleUtils.INCOMPLETE_USER_INFORMATION: 用户信息不完整");
-                    break;
-                case ScheduleUtils.PERFECT:
-                    Log.d("LoginActivity", "handleMessage: case ScheduleUtils.PERFECT: 成功");
                     break;
             }
             return false;
@@ -228,16 +240,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 获取课表
      */
     private void getCourse() {
-        Log.d("LoginActivity", "getCourse: 开始获取课表...");
+        Log.d(TAG, "getCourse: 开始获取课表...");
         int status = ScheduleUtils.getCourse(new CourseBeanListCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.d("LoginActivity", "getCourse: 获取课表失败...");
+                Log.d(TAG, "getCourse: 获取课表失败...");
             }
 
             @Override
             public void onResponse(Map<String, List<CourseBase>> courseMap, int id) {
-                Log.d("LoginActivity", "getCourse: " + courseMap);
+                Log.d(TAG, "getCourse: " + courseMap);
                 if (courseMap != null && !courseMap.isEmpty()) {
 
                     final List<CourseBase> courseBaseList = courseMap.get(ScheduleUtils.userInfo.clazz);
@@ -253,7 +265,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 Message msg = Message.obtain();
                                 msg.what = ScheduleUtils.COURSE_LIST_OK;
                                 handler.sendMessage(msg);
-                                Log.d("LoginActivity", "getCourse: 获取课表成功...");
+                                Log.d(TAG, "getCourse: 获取课表成功...");
                             }
                         }).start();
                     }

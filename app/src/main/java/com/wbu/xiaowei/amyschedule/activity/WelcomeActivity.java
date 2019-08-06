@@ -20,6 +20,7 @@ import java.util.Date;
 import okhttp3.Call;
 
 public class WelcomeActivity extends BaseActivity {
+    public static final String TAG = WelcomeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +143,7 @@ public class WelcomeActivity extends BaseActivity {
      * 应用首次启动
      */
     private void doFirstTimeRun() {
-        Log.d("WelcomeActivity", "doFirstTimeRun: " + "应用首次启动");
+        Log.d(TAG, "doFirstTimeRun: " + "应用首次启动");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -155,15 +156,15 @@ public class WelcomeActivity extends BaseActivity {
      * 应用非首次启动
      */
     private void doNotFirstTimeRun() {
-        Log.d("WelcomeActivity", "doNotFirstTimeRun: " + "应用非首次启动，正在尝试登录...");
+        Log.d(TAG, "doNotFirstTimeRun: " + "应用非首次启动，正在尝试登录...");
 
         // 读取用户信息
         ScheduleUtils.getInstance(this).readUserInfo();
 
         if (ScheduleUtils.userInfo != null && isFirstTimeRunOfWeek()) {
-            Log.d("WelcomeActivity", "当周首次打开");
+            Log.d(TAG, "当周首次打开");
         } else {
-            Log.d("WelcomeActivity", "非当周首次打开");
+            Log.d(TAG, "非当周首次打开");
         }
 
         // 尝试登录教务系统
@@ -177,7 +178,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onResponse(String response, int id) {
                 if (response.contains("学生个人中心")) {
-                    Log.d("WelcomeActivity", "登录成功");
+                    Log.d(TAG, "登录成功");
                     ScheduleUtils.userInfo.isLogin = true;
                 } else {
                     ScheduleUtils.userInfo.isLogin = false;

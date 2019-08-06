@@ -31,6 +31,7 @@ import java.util.List;
 import okhttp3.Call;
 
 public class MyScoreActivity extends BaseActivity implements View.OnClickListener {
+    public static final String TAG = MyScoreActivity.class.getSimpleName();
 
     // 控件
     private LinearLayout errorAlertView;
@@ -149,13 +150,13 @@ public class MyScoreActivity extends BaseActivity implements View.OnClickListene
 
         switch (flag) {
             case ScheduleUtils.NOT_LOGIN:
-                Log.d("MyScoreActivity", "getScore: case ScheduleUtils.NOT_LOGIN: ScheduleUtils.userInfo == null: 没有用户信息...");
+                Log.d(TAG, "getScore: case ScheduleUtils.NOT_LOGIN: ScheduleUtils.userInfo == null: 没有用户信息...");
                 refreshLayout.setRefreshing(false);
                 showErrorInfo("你还尚未登录 2秒后去登录");
                 toLoginActivity(); // 跳转到登录界面
                 break;
             case ScheduleUtils.PERFECT:
-                Log.d("MyScoreActivity", "getScore: case ScheduleUtils.PERFECT");
+                Log.d(TAG, "getScore: case ScheduleUtils.PERFECT");
                 break;
         }
     }

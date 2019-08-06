@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
+    public static final String TAG = MyApplication.class.getSimpleName();
 
     @Override
     public void onCreate() {

@@ -31,6 +31,7 @@ import java.util.List;
 import okhttp3.Call;
 
 public class MainActivity extends BaseActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomNavigationView navView; // 底部导航按钮
     private ViewPager viewPager;
@@ -156,7 +157,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         // ScheduleUtils.getInstance(this).readUserInfo();
         if (ScheduleUtils.userInfo != null) {
-            Log.d("MainActivity", "onResume: " + ScheduleUtils.userInfo.toString());
+            Log.d(TAG, "onResume: " + ScheduleUtils.userInfo.toString());
         }
     }
 
@@ -198,7 +199,7 @@ public class MainActivity extends BaseActivity {
      * 退出教务系统
      */
     private void logout() {
-        Log.d("MainActivity", "onDestroy: 正在注销...");
+        Log.d(TAG, "onDestroy: 正在注销...");
         if (ScheduleUtils.userInfo != null) {
             ScheduleUtils.userInfo.isLogin = false;
             ScheduleUtils.getInstance(this).saveUserInfo();

@@ -46,6 +46,8 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class ScheduleFragment extends Fragment {
+    public static final String TAG = ScheduleFragment.class.getSimpleName();
+
     private View view;
 
     // 课表控件
@@ -130,7 +132,7 @@ public class ScheduleFragment extends Fragment {
      * 初始化课表控件
      */
     private void initTimetableView() {
-        Log.d("ScheduleFragment", "initTimetableView: 开始初始化课表控件...");
+        Log.d(TAG, "initTimetableView: 开始初始化课表控件...");
 
         // 展示加载动画
         showLoadingAnim();
@@ -144,7 +146,7 @@ public class ScheduleFragment extends Fragment {
         if (MainActivity.scheduleList.isEmpty()) {
             // 没有课表，等待重新初始化
             showNoneScheduleInfo();
-            Log.d("ScheduleFragment", "initTimetableView: 没有课程列表，停止初始化，等待下次初始化...");
+            Log.d(TAG, "initTimetableView: 没有课程列表，停止初始化，等待下次初始化...");
             return;
         }
 
@@ -154,7 +156,7 @@ public class ScheduleFragment extends Fragment {
         int curWeek = ScheduleUtils.userInfo.currentWeek;
         selectWeekBtn.setText("第" + curWeek + "周");
         selectWeekBtn.setCompoundDrawables(null, null, iconDropDown, null);
-        Log.d("ScheduleFragment", "initTimetableView: 获取当前周: curWeek: " + curWeek);
+        Log.d(TAG, "initTimetableView: 获取当前周: curWeek: " + curWeek);
 
         // 获取周次选择控件
         weekView = view.findViewById(R.id.id_weekview);
@@ -219,7 +221,7 @@ public class ScheduleFragment extends Fragment {
         // 初始化完成 显示课表
         showSchedule();
         isInit = false;
-        Log.d("ScheduleFragment", "initTimetableView: 初始化课表控件完成...");
+        Log.d(TAG, "initTimetableView: 初始化课表控件完成...");
     }
 
     private Drawable iconDropDown; // 向下三角
@@ -301,7 +303,7 @@ public class ScheduleFragment extends Fragment {
         int flag = ScheduleUtils.getCourse(new CourseBeanListCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.d("ScheduleFragment", "ScheduleUtils.getCourse(): onError(): 获取课表失败...");
+                Log.d(TAG, "importCourse: ScheduleUtils.getCourse: onError: 获取课表失败...");
                 checkNetork(); // 检查网络
             }
 
@@ -309,7 +311,7 @@ public class ScheduleFragment extends Fragment {
             public void onResponse(Map<String, List<CourseBase>> courseBaseMap, int id) {
                 if (courseBaseMap == null || courseBaseMap.isEmpty()) {
                     // 教务系统没有课表
-                    Log.d("获取课表：", "教务系统没有课表...");
+                    Log.d(TAG, "importCourse: ScheduleUtils.getCourse: onResponse: 获取课表: 教务系统没有课表...");
                     return;
                 }
 
@@ -317,7 +319,7 @@ public class ScheduleFragment extends Fragment {
                 List<CourseBase> courseBaseList = courseBaseMap.get(ScheduleUtils.userInfo.clazz);
                 if (courseBaseList == null || courseBaseList.isEmpty()) {
                     // 获取的课表没有该班级
-                    Log.d("获取课表：", "获取的课表没有该班级...");
+                    Log.d(TAG, "importCourse: ScheduleUtils.getCourse: onResponse: 获取课表: 获取的课表没有该班级...");
                     return;
                 }
 
@@ -347,12 +349,12 @@ public class ScheduleFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("ScheduleFragment", "importCourse: 保存课表: 正在子线程保存课表...");
+                        Log.d(TAG, "importCourse: 保存课表: 正在子线程保存课表...");
                         new Delete().from(Course.class).execute(); // 删除所有旧课程
                         for (Course course : courses) {
                             course.save();
                         }
-                        Log.d("ScheduleFragment", "importCourse: 保存课表: 子线程保存课表成功...");
+                        Log.d(TAG, "importCourse: 保存课表: 子线程保存课表成功...");
                     }
                 }).start();
             }
@@ -360,12 +362,12 @@ public class ScheduleFragment extends Fragment {
 
         switch (flag) {
             case ScheduleUtils.NOT_LOGIN:
-                Log.d("ScheduleFragment", "importCourse: 获取课表: case ScheduleUtils.NOT_LOGIN: 用户没有登录...");
+                Log.d(TAG, "importCourse: 获取课表: case ScheduleUtils.NOT_LOGIN: 用户没有登录...");
                 hiddenLoadingAnim();
                 showToLoginSnackbar(); // 底部提示去登录
                 break;
             case ScheduleUtils.INCOMPLETE_USER_INFORMATION:
-                Log.d("ScheduleFragment", "importCourse: 获取课表: case ScheduleUtils.INCOMPLETE_USER_INFORMATION: 用户信息不完整...");
+                Log.d(TAG, "importCourse: 获取课表: case ScheduleUtils.INCOMPLETE_USER_INFORMATION: 用户信息不完整...");
                 hiddenLoadingAnim();
                 showToCompleteInfoSnackbar(); // 底部提示去完善资料
                 break;
@@ -468,7 +470,7 @@ public class ScheduleFragment extends Fragment {
                 @Override
                 public void onSelected(int target) {
                     if (target != -1) {
-                        Log.d("ScheduleFragment", "onWeekLeftLayoutClicked: 设置当前周: curWeek: " + (target + 1));
+                        Log.d(TAG, "onWeekLeftLayoutClicked: 设置当前周: curWeek: " + (target + 1));
                         hideWeekView();
                         weekView.curWeek(target + 1).updateView();
                         timetableView.changeWeekForce(target + 1);

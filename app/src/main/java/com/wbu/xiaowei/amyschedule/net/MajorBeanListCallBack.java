@@ -1,7 +1,5 @@
 package com.wbu.xiaowei.amyschedule.net;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.wbu.xiaowei.amyschedule.bean.MajorBase;
 import com.zhy.http.okhttp.callback.Callback;

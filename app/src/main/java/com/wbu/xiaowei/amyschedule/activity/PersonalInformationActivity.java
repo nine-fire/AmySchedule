@@ -17,8 +17,8 @@ import com.wbu.xiaowei.amyschedule.R;
 import com.wbu.xiaowei.amyschedule.bean.Course;
 import com.wbu.xiaowei.amyschedule.bean.Major;
 import com.wbu.xiaowei.amyschedule.bean.UserInfo;
-import com.wbu.xiaowei.amyschedule.util.ScheduleUtils;
 import com.wbu.xiaowei.amyschedule.other.WheelViewDialog;
+import com.wbu.xiaowei.amyschedule.util.ScheduleUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.MemoryCookieStore;
@@ -30,24 +30,26 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 public class PersonalInformationActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton backBtnInUserInfoPage;
-    TextView logoutBtn;
-    TextView usernameTvInUserInfoPage;
-    TextView gradeTvInUserInfoPage;
-    TextView departmentsTvInUserInfoPage;
-    TextView majorTvInUserInfoPage;
-    TextView clazzTvInUserInfoPage;
-    TextView semesterTvInUserInfoPage;
-    Button saveBtnInLoginPage;
-    ProgressBar progressBar;
+    public static final String TAG = PersonalInformationActivity.class.getSimpleName();
 
-    String grade;
-    String departments;
-    String major;
-    String clazz;
-    String semester;
+    private ImageButton backBtnInUserInfoPage;
+    private TextView logoutBtn;
+    private TextView usernameTvInUserInfoPage;
+    private TextView gradeTvInUserInfoPage;
+    private TextView departmentsTvInUserInfoPage;
+    private TextView majorTvInUserInfoPage;
+    private TextView clazzTvInUserInfoPage;
+    private TextView semesterTvInUserInfoPage;
+    private Button saveBtnInLoginPage;
+    private ProgressBar progressBar;
 
-    List<String> departmentsList;
+    private String grade;
+    private String departments;
+    private String major;
+    private String clazz;
+    private String semester;
+
+    private List<String> departmentsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,35 +59,44 @@ public class PersonalInformationActivity extends AppCompatActivity implements Vi
         initView();
     }
 
+    /**
+     * 初始化
+     */
     private void initView() {
         backBtnInUserInfoPage = findViewById(R.id.back_btn_in_user_info_page);
-        logoutBtn = findViewById(R.id.logout_btn);
-        usernameTvInUserInfoPage = findViewById(R.id.username_tv_in_user_info_page);
-        gradeTvInUserInfoPage = findViewById(R.id.grade_tv_in_user_info_page);
-        departmentsTvInUserInfoPage = findViewById(R.id.departments_tv_in_user_info_page);
-        majorTvInUserInfoPage = findViewById(R.id.major_tv_in_user_info_page);
-        clazzTvInUserInfoPage = findViewById(R.id.clazz_tv_in_user_info_page);
-        semesterTvInUserInfoPage = findViewById(R.id.semester_tv_in_user_info_page);
-        saveBtnInLoginPage = findViewById(R.id.save_btn_in_login_page);
-        progressBar = findViewById(R.id.progress_bar_in_info_page);
-
         backBtnInUserInfoPage.setColorFilter(getResources().getColor(R.color.white));
         backBtnInUserInfoPage.setOnClickListener(this);
+
+        logoutBtn = findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(this);
+
+        usernameTvInUserInfoPage = findViewById(R.id.username_tv_in_user_info_page);
+        usernameTvInUserInfoPage.setText(ScheduleUtils.userInfo.username);
+
+        gradeTvInUserInfoPage = findViewById(R.id.grade_tv_in_user_info_page);
+        gradeTvInUserInfoPage.setText(ScheduleUtils.userInfo.grade);
         gradeTvInUserInfoPage.setOnClickListener(this);
+
+        departmentsTvInUserInfoPage = findViewById(R.id.departments_tv_in_user_info_page);
+        departmentsTvInUserInfoPage.setText(ScheduleUtils.userInfo.departments);
         departmentsTvInUserInfoPage.setOnClickListener(this);
+
+        majorTvInUserInfoPage = findViewById(R.id.major_tv_in_user_info_page);
+        majorTvInUserInfoPage.setText(ScheduleUtils.userInfo.major);
         majorTvInUserInfoPage.setOnClickListener(this);
+
+        clazzTvInUserInfoPage = findViewById(R.id.clazz_tv_in_user_info_page);
+        clazzTvInUserInfoPage.setText(ScheduleUtils.userInfo.clazz);
         clazzTvInUserInfoPage.setOnClickListener(this);
+
+        semesterTvInUserInfoPage = findViewById(R.id.semester_tv_in_user_info_page);
+        semesterTvInUserInfoPage.setText(ScheduleUtils.userInfo.semester);
         semesterTvInUserInfoPage.setOnClickListener(this);
+
+        saveBtnInLoginPage = findViewById(R.id.save_btn_in_login_page);
         saveBtnInLoginPage.setOnClickListener(this);
 
-        usernameTvInUserInfoPage.setText(ScheduleUtils.userInfo.username);
-        gradeTvInUserInfoPage.setText(ScheduleUtils.userInfo.grade);
-        departmentsTvInUserInfoPage.setText(ScheduleUtils.userInfo.departments);
-        majorTvInUserInfoPage.setText(ScheduleUtils.userInfo.major);
-        clazzTvInUserInfoPage.setText(ScheduleUtils.userInfo.clazz);
-        semesterTvInUserInfoPage.setText(ScheduleUtils.userInfo.semester);
-
+        progressBar = findViewById(R.id.progress_bar_in_info_page);
         departmentsList = new ArrayList<>(UserInfo.DEPARTMENTS.keySet());
     }
 
@@ -139,6 +150,9 @@ public class PersonalInformationActivity extends AppCompatActivity implements Vi
         }, 2000);
     }
 
+    /**
+     * 显示单选对话框
+     */
     private void showSelectDialog(int id) {
         WheelViewDialog dialog = new WheelViewDialog(PersonalInformationActivity.this);
         dialog.setNoNegativeButton(true);
@@ -213,7 +227,7 @@ public class PersonalInformationActivity extends AppCompatActivity implements Vi
         ScheduleUtils.logout();
         ScheduleUtils.userInfo = null;
         boolean success = deleteFile("user_info.xml");
-        Log.d("PersonalInfo...Activity", "logout: user_info.xml删除: " + success);
+        Log.d(TAG, "logout: user_info.xml删除: " + success);
         new Thread(new Runnable() {
             @Override
             public void run() {

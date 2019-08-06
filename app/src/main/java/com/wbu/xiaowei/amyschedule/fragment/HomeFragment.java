@@ -20,7 +20,6 @@ import com.wbu.xiaowei.amyschedule.R;
 import com.wbu.xiaowei.amyschedule.activity.MainActivity;
 import com.wbu.xiaowei.amyschedule.adapter.TodayCourseListAdapter;
 import com.wbu.xiaowei.amyschedule.bean.Course;
-import com.wbu.xiaowei.amyschedule.other.LoadingAnimationDialog;
 import com.wbu.xiaowei.amyschedule.other.SimpleDividerItemDecoration;
 import com.wbu.xiaowei.amyschedule.util.ScheduleUtils;
 import com.zhuangfei.timetable.model.Schedule;
@@ -30,6 +29,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    public static final String TAG = HomeFragment.class.getSimpleName();
 
     private View view;
     private SwipeRefreshLayout refreshLayout; // 下拉刷新
@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
         // 设置增加或删除条目的动画
         todayCourseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        Log.d("HomeFragment", "initTodayCourseView: 初始化完毕...");
+        Log.d(TAG, "initTodayCourseView: 初始化完毕...");
         isInit = false;
     }
 

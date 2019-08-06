@@ -19,13 +19,13 @@ public abstract class FractionDetailsCallback extends Callback<FractionDetails> 
         Elements tr = table.getElementsByTag("tr");
         Elements td = tr.get(1).getElementsByTag("td");
 
-        Float peacetimeScore = 0.0F;
-        Integer peacetimeScoreProportion = 0;
-        Float midTermScore = 0.0F;
-        Integer midTermScoreProportion = 0;
-        Float finalScore = 0.0F;
-        Integer finalScoreProportion = 0;
-        Float totalScore = 0.0F;
+        float peacetimeScore = 0.0F;
+        int peacetimeScoreProportion = 0;
+        float midTermScore = 0.0F;
+        int midTermScoreProportion = 0;
+        float finalScore = 0.0F;
+        int finalScoreProportion = 0;
+        float totalScore = 0.0F;
 
         try {
             peacetimeScore = Float.parseFloat(td.get(1).text());

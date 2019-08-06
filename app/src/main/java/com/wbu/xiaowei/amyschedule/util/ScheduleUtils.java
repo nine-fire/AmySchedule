@@ -23,7 +23,6 @@ import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.jsoup.internal.StringUtil;
-import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,6 +33,8 @@ import java.util.Properties;
 import okhttp3.Call;
 
 public class ScheduleUtils {
+    public static final String TAG = ScheduleUtils.class.getSimpleName();
+
     public static final int PERFECT = 0; // 成功
     public static final int NOT_LOGIN = 1; // 没有登录
     public static final int LOGIN_OK = 2; // 登录成功
@@ -93,7 +94,7 @@ public class ScheduleUtils {
     public static int getCourse(CourseBeanListCallback callback) {
         if (userInfo == null) {
             // 没有登录
-            Log.d("ScheduleUtils", "获取课表: 没有登录: userInfo == null");
+            Log.d(TAG, "getCourse: 获取课表: 没有登录: userInfo == null");
             return NOT_LOGIN;
         }
 
@@ -140,7 +141,7 @@ public class ScheduleUtils {
     public static int getScore(ScoreBeanListCallback callback) {
         if (userInfo == null) {
             // 没有登录
-            Log.d("ScheduleUtils", "getScore: 获取成绩: 没有登录: userInfo == null");
+            Log.d(TAG, "getScore: 获取成绩: 没有登录: userInfo == null");
             return NOT_LOGIN;
         }
 
@@ -206,7 +207,7 @@ public class ScheduleUtils {
 
             @Override
             public void onResponse(String response, int id) {
-                Log.d("ScheduleUtils", "logout: onResponse: 注销成功...");
+                Log.d(TAG, "logout: onResponse: 注销成功...");
             }
         });
     }
@@ -216,7 +217,7 @@ public class ScheduleUtils {
      */
     private static int getLoginFormData() {
         if (userInfo == null) {
-            Log.d("ScheduleUtils", "getLoginFormData: 获取登录所必须的表单数据: 没有用户数据: ScheduleUtils.userInfo == null");
+            Log.d(TAG, "getLoginFormData: 获取登录所必须的表单数据: 没有用户数据: ScheduleUtils.userInfo == null");
             return NOT_LOGIN;
         }
 
@@ -224,7 +225,7 @@ public class ScheduleUtils {
         final String password = userInfo.password;
 
         if (StringUtil.isBlank(username) || StringUtil.isBlank(password)) {
-            Log.d("ScheduleUtils", "getLoginFormData: 获取登录所必须的表单数据: 用户信息不完整: username: " + username + " password: " + password);
+            Log.d(TAG, "getLoginFormData: 获取登录所必须的表单数据: 用户信息不完整: username: " + username + " password: " + password);
             return INCOMPLETE_USER_INFORMATION;
         }
 
@@ -263,7 +264,7 @@ public class ScheduleUtils {
      * 读取用户信息
      */
     public void readUserInfo() {
-        Log.d("ScheduleUtils", "开始读取用户信息...");
+        Log.d(TAG, "readUserInfo: 开始读取用户信息...");
         FileInputStream in = null;
         Properties properties = new Properties();
         try {
@@ -281,7 +282,7 @@ public class ScheduleUtils {
             String gender = properties.getProperty("gender", "");
             String isLogin = properties.getProperty("isLogin", "false");
             userInfo = new UserInfo(username, password, semester, Integer.parseInt(currentWeek), departments, grade, major, clazz, studentName, gender, Boolean.parseBoolean(isLogin));
-            Log.d("ScheduleUtils", "用户信息读取成功: " + userInfo.toString());
+            Log.d(TAG, "readUserInfo: 用户信息读取成功: " + userInfo.toString());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -299,7 +300,7 @@ public class ScheduleUtils {
      * 保存用户信息
      */
     public void saveUserInfo() {
-        Log.d("ScheduleUtils", "saveUserInfo: new Thread: userInfo=" + userInfo.toString() + " 开始在子线程中保存用户信息...");
+        Log.d(TAG, "saveUserInfo: new Thread: userInfo=" + userInfo.toString() + " 开始在子线程中保存用户信息...");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -333,6 +334,6 @@ public class ScheduleUtils {
 
             }
         }).start();
-        Log.d("ScheduleUtils", "saveUserInfo: new Thread: 在子线程中保存用户信息成功...");
+        Log.d(TAG, "saveUserInfo: new Thread: 在子线程中保存用户信息成功...");
     }
 }
