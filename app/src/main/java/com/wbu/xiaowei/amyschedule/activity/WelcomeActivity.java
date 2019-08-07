@@ -149,7 +149,7 @@ public class WelcomeActivity extends BaseActivity {
             public void run() {
                 startAppToHome();
             }
-        }, 0);
+        }, 3000);
     }
 
     /**
@@ -192,7 +192,7 @@ public class WelcomeActivity extends BaseActivity {
             public void run() {
                 startAppToHome();
             }
-        }, 0);
+        }, 1000);
     }
 
     /**

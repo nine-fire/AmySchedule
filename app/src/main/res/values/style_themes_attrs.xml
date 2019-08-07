@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="color_primary" format="color" />
+    <attr name="color_primary_dark" format="color" />
+    <attr name="color_primary_light" format="color" />
+    <attr name="color_accent" format="color" />
+    <attr name="color_primary_text" format="color" />
+    <attr name="color_secondary_text" format="color" />
+    <attr name="color_icons" format="color" />
+    <attr name="color_divider" format="color" />
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        <style name="theme_default" parent="Theme.AppCompat.Light.NoActionBar">
+            <item name="color_primary">#9C27B0</item>
+            <item name="color_primary_dark">#7B1FA2</item>
+            <item name="color_primary_light">#E1BEE7</item>
+            <item name="color_accent">#7C4DFF</item>
+            <item name="color_primary_text">#212121</item>
+            <item name="color_secondary_text">#757575</item>
+            <item name="color_icons">#FFFFFF</item>
+            <item name="color_divider">#BDBDBD</item>
+        </style>
+
+        <style name="theme_shao_nv_fen" parent="theme_default">
+            <item name="color_primary">#E91E63</item>
+            <item name="color_primary_dark">#C2185B</item>
+            <item name="color_primary_light">#F8BBD0</item>
+            <item name="color_accent">#00BCD4</item>
+        </style>
+
+        <style name="theme_zao_miao_nv" parent="theme_default">
+            <item name="color_primary">#4CAF50</item>
+            <item name="color_primary_dark">#388E3C</item>
+            <item name="color_primary_light">#C8E6C9</item>
+            <item name="color_accent">#CDDC39</item>
+        </style>
+
+        <style name="theme_xian_dan_huang" parent="theme_default">
+            <item name="color_primary">#4CAF50</item>
+            <item name="color_primary_dark">#388E3C</item>
+            <item name="color_primary_light">#C8E6C9</item>
+            <item name="color_accent">#CDDC39</item>
+        </style>
+
+        <style name="theme_yi_ma_hong" parent="theme_default">
+            <item name="color_primary">#F44336</item>
+            <item name="color_primary_dark">#D32F2F</item>
+            <item name="color_primary_light">#FFCDD2</item>
+            <item name="color_accent">#536DFE</item>
+        </style>
+
+        <style name="theme_shui_ni_hui" parent="theme_default">
+            <item name="color_primary">#9E9E9E</item>
+            <item name="color_primary_dark">#616161</item>
+            <item name="color_primary_light">#F5F5F5</item>
+            <item name="color_accent">#607D8B</item>
+        </style>-->
+</resources>
